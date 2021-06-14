@@ -26,7 +26,7 @@ func main() {
 	if len(os.Args) >= 2 {
 		handle, _ = os.Open(os.Args[1])
 	} else {
-		handle = os.Stdin
+		panic("Please give a filename containing your fish program")
 	}
 
 	defer handle.Close()
@@ -39,8 +39,6 @@ func main() {
 	for running {
 		sym := grid[loc.X][loc.Y]
 		stack := stacks[len(stacks)-1]
-
-		// fmt.Println(sym)
 
 		switch sym {
 		case ";":
@@ -79,8 +77,6 @@ func main() {
 				stack.Push(i)
 			}
 		}
-
-		//fmt.Println(stack.Values)
 
 		loc.Move(vel)
 	}
