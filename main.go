@@ -63,6 +63,15 @@ func main() {
 
 			stacks = stacks[0 : len(stacks)-1]
 
+		case "\\":
+			if vel.X != 0 {
+				vel.Y = vel.X * -1
+				vel.X = 0
+			} else if vel.Y != 0 {
+				vel.X = vel.Y
+				vel.Y = 0
+			}
+
 		case "r":
 			stack.Reverse()
 		case "n":
