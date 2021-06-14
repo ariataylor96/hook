@@ -43,6 +43,7 @@ func main() {
 		switch sym {
 		case ";":
 			running = false
+
 		case "v":
 			vel = Velocity{0, 1}
 		case "^":
@@ -51,6 +52,7 @@ func main() {
 			vel = Velocity{-1, 0}
 		case ">":
 			vel = Velocity{1, 0}
+
 		case "[":
 			new_stack := stack.Split()
 
@@ -60,6 +62,7 @@ func main() {
 			previous_stack.Join(stack)
 
 			stacks = stacks[0 : len(stacks)-1]
+
 		case "r":
 			stack.Reverse()
 		case "n":
@@ -68,9 +71,7 @@ func main() {
 			fmt.Println(stack.Nodes)
 		case "x":
 			fmt.Println(len(stack.Nodes))
-		case " ":
-			loc.Move(vel)
-			continue
+
 		default:
 			i, err := strconv.Atoi(sym)
 			if err == nil {
