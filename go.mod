@@ -1,3 +1,3 @@
-module github.com/markrawls/hook
+module hook
 
 go 1.16

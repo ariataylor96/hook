@@ -1,4 +1,4 @@
-package main
+package parser
 
 import (
 	"bufio"
@@ -7,7 +7,8 @@ import (
 )
 
 func get_dimensions(handle *os.File) (x int, y int) {
-	handle.Seek(0, 0)
+	defer handle.Seek(0, 0)
+
 	x, y = 0, 0
 
 	scanner := bufio.NewScanner(handle)
@@ -25,7 +26,8 @@ func get_dimensions(handle *os.File) (x int, y int) {
 }
 
 func read_line(handle *os.File, line int) string {
-	handle.Seek(0, 0)
+	defer handle.Seek(0, 0)
+
 	scanner := bufio.NewScanner(handle)
 	line_no := 0
 
@@ -41,7 +43,8 @@ func read_line(handle *os.File, line int) string {
 }
 
 func Tokenize(handle *os.File) [][]string {
-	handle.Seek(0, 0)
+	defer handle.Seek(0, 0)
+
 	x_size, y_size := get_dimensions(handle)
 
 	var ret [][]string
