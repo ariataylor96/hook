@@ -1,50 +1,69 @@
 package main
 
+type Node struct {
+	Value int
+}
+
 type Stack struct {
-	Values []int
+	Nodes []*Node
+	Count int
+}
+
+func NewNode(val int) *Node {
+	return &Node{val}
+}
+
+func NewStack() *Stack {
+	return &Stack{}
 }
 
 func (st *Stack) Push(val int) {
-	st.Values = append(st.Values, val)
+	st.Nodes = append(st.Nodes, NewNode(val))
+	st.Count = len(st.Nodes)
 }
 
 func (st *Stack) Pop() (ret int) {
-	size := len(st.Values)
+	ret = st.Nodes[st.Count-1].Value
 
-	ret = st.Values[size-1]
-	st.Values = st.Values[:size]
+	st.Nodes = st.Nodes[:st.Count-1]
+	st.Count = len(st.Nodes)
 
 	return
 }
 
-func (st *Stack) Split() (ret Stack) {
-	values_to_take := st.Pop()
-	size := len(st.Values)
+func (st *Stack) Split() (ret *Stack) {
+	ret = NewStack()
 
-	ret = Stack{st.Values[size-values_to_take : size]}
-	st.Values = st.Values[0 : size-values_to_take]
+	values_to_take := st.Pop()
+
+	for i := 0; i < values_to_take; i++ {
+		ret.Push(st.Pop())
+	}
+
+	ret.Reverse()
 
 	return
 }
 
 func (st *Stack) Reverse() {
-	var new []int
-
-	// This gets modified as we iterate
-	size := len(st.Values)
+	var new []*Node
+	size := st.Count
 
 	for i := 0; i < size; i++ {
-		new = append(new, st.Pop())
+		new = append(new, NewNode(st.Pop()))
 	}
 
-	st.Values = new
+	st.Nodes = new
+	st.Count = len(st.Nodes)
 }
 
 func (st *Stack) Join(sub *Stack) {
 	// Reverse the stack in place since we're pushing values
 	sub.Reverse()
 
-	for _, val := range sub.Values {
-		st.Push(val)
+	size := sub.Count
+
+	for i := 0; i < size; i++ {
+		st.Push(sub.Pop())
 	}
 }

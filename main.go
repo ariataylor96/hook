@@ -15,7 +15,7 @@ func Use(vals ...interface{}) {
 
 func main() {
 	var grid [][]string
-	var stacks []Stack
+	var stacks []*Stack
 
 	loc := Location{0, 0, &grid}
 	vel := Velocity{1, 0}
@@ -34,7 +34,7 @@ func main() {
 
 	Use(loc, vel, running, grid, stacks)
 
-	stacks = append(stacks, Stack{[]int{}})
+	stacks = append(stacks, NewStack())
 
 	for running {
 		sym := grid[loc.X][loc.Y]
@@ -54,7 +54,9 @@ func main() {
 		case ">":
 			vel = Velocity{1, 0}
 		case "[":
-			stacks = append(stacks, stack.Split())
+			new_stack := stack.Split()
+
+			stacks = append(stacks, new_stack)
 		case "]":
 			previous_stack := stacks[len(stacks)-2]
 			previous_stack.Join(stack)
@@ -63,14 +65,19 @@ func main() {
 		case "r":
 			stack.Reverse()
 		case "n":
-			fmt.Println(stack.Values)
 			fmt.Print(stack.Pop())
+		case "d":
+			fmt.Println(stack.Nodes)
+		case "x":
+			fmt.Println(len(stack.Nodes))
 		case " ":
 			loc.Move(vel)
 			continue
 		default:
-			i, _ := strconv.Atoi(sym)
-			stack.Push(i)
+			i, err := strconv.Atoi(sym)
+			if err == nil {
+				stack.Push(i)
+			}
 		}
 
 		//fmt.Println(stack.Values)
