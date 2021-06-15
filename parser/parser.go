@@ -22,6 +22,9 @@ func get_dimensions(handle *os.File) (x int, y int) {
 		}
 	}
 
+	x += 255
+	y += 255
+
 	return
 }
 

@@ -1,5 +1,12 @@
 package main
 
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
 type Node struct {
 	Value int
 }
@@ -23,9 +30,9 @@ func (st *Stack) Push(val int) {
 }
 
 func (st *Stack) Pop() (ret int) {
-	ret = st.Nodes[st.Count-1].Value
+	ret = st.Nodes[max(0, st.Count-1)].Value
 
-	st.Nodes = st.Nodes[:st.Count-1]
+	st.Nodes = st.Nodes[:max(0, st.Count-1)]
 	st.Count = len(st.Nodes)
 
 	return
